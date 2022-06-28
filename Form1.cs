@@ -42,6 +42,7 @@ namespace QRSC
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+			cCurrentDataHolder.fProcessing();
 			var qr = new ZXing.BarcodeWriter();
 			qr.Options = options;
 			qr.Format = ZXing.BarcodeFormat.QR_CODE;

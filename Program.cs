@@ -271,7 +271,8 @@ namespace QRSC
             }
         }
 
-
+        //Тип функция получения данных о сети, но все входящие данные
+        //являются уникальными параметрами, которые можно представить в виде массива строк, но оно нам нужно?
         /*public void FNetworkParams()
         {
             NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
