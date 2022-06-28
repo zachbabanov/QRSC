@@ -269,10 +269,13 @@ namespace QRSC
                     sCurrentDisk.total_space = d.TotalSize;
                     sCurrentDisk.root_dir = d.RootDirectory.ToString();
                 }
-                dAllDrives += $"Disk name: {sCurrentDisk.name}\n Type: {sCurrentDisk.type}\n " +
-                    $"Label: {sCurrentDisk.label}\n File system: {sCurrentDisk.file_system}\n " +
-                    $"Available space: {sCurrentDisk.avl_space}\n Total space: {sCurrentDisk.total_space}\n " +
-                    $"Root directory: {sCurrentDisk.root_dir}\n";
+                dAllDrives += $"Disk name: {sCurrentDisk.name}" +
+                    $"Type: {sCurrentDisk.type}" +
+                    $"Label: {sCurrentDisk.label}" +
+                    $" File system: {sCurrentDisk.file_system} " +
+                    $"Available space: {sCurrentDisk.avl_space} " +
+                    $"Total space: {sCurrentDisk.total_space} " +
+                    $"Root directory: {sCurrentDisk.root_dir}";
             }
             return dAllDrives;
         }
