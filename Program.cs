@@ -207,6 +207,36 @@ namespace QRSC
             return "none";
         }
         /// <summary>
+        /// Функция получения общего количества ОЗУ
+        /// </summary>
+        public long fRAMSize()
+        {
+            ObjectQuery wql = new ObjectQuery("SELECT * FROM Win32_OperatingSystem");
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher(wql);
+            ManagementObjectCollection results = searcher.Get();
+
+            foreach (ManagementObject result in results)
+            {
+                return Convert.ToInt64(result["TotalVisibleMemorySize"]);
+            }
+            return 0;
+        }
+        /// <summary>
+        /// Функция получения количества свободного ОЗУ
+        /// </summary>
+        public long fRAMFree()
+        {
+            ObjectQuery wql = new ObjectQuery("SELECT * FROM Win32_OperatingSystem");
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher(wql);
+            ManagementObjectCollection results = searcher.Get();
+
+            foreach (ManagementObject result in results)
+            {
+                return Convert.ToInt64(result["FreePhysicalMemory"]);
+            }
+            return 0;
+        }
+        /// <summary>
         /// Структура типа данных о диске
         /// </summary>
         public struct sDisk
@@ -228,13 +258,16 @@ namespace QRSC
             foreach (DriveInfo d in allDrives)
             {
                 sDisk sCurrentDisk = new sDisk();
-                sCurrentDisk.name = d.Name;
-                sCurrentDisk.type = Convert.ToString(d.DriveType);
-                sCurrentDisk.label = d.VolumeLabel;
-                sCurrentDisk.file_system = d.DriveFormat.ToString();
-                sCurrentDisk.avl_space = d.AvailableFreeSpace;
-                sCurrentDisk.total_space = d.TotalSize;
-                sCurrentDisk.root_dir = d.RootDirectory.ToString();
+                if (d.IsReady)
+                {
+                    sCurrentDisk.name = d.Name;
+                    sCurrentDisk.type = d.DriveType.ToString();
+                    sCurrentDisk.label = d.VolumeLabel;
+                    sCurrentDisk.file_system = d.DriveFormat.ToString();
+                    sCurrentDisk.avl_space = d.AvailableFreeSpace;
+                    sCurrentDisk.total_space = d.TotalSize;
+                    sCurrentDisk.root_dir = d.RootDirectory.ToString();
+                }
             }
         }
 
@@ -276,8 +309,12 @@ namespace QRSC
         public int dCPUNumberOfCores;
         public int dCPUNumberOfThreads;
         public int dCPUWidth;
+        public long dRAMSize;
+        public long dRAMFree;
         public long dCPUCurrentClockSpeed;
-
+        /// <summary>
+        /// Функция получения данных
+        /// </summary>
         public void fProcessing()
         {
             dGPUName = fGPUName();
@@ -294,7 +331,10 @@ namespace QRSC
             dCPUNumberOfCores = fCPUNumberOfCores();
             dCPUNumberOfThreads = fCPUNumberOfThreads();
             dCPUWidth = fCPUWidth();
+            dRAMSize = fRAMSize();
+            dRAMFree = fRAMFree();
             dCPUCurrentClockSpeed = fCPUCurrentClockSpeed();
+            fDiskParams();
         }
 }
 
