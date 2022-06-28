@@ -252,9 +252,10 @@ namespace QRSC
         /// <summary>
         /// Заполнение структуры даных о диске
         /// </summary>
-        public void fDiskParams()
+        public string fDiskParams()
         {
             DriveInfo[] allDrives = DriveInfo.GetDrives();
+            string dAllDrives = "";
             foreach (DriveInfo d in allDrives)
             {
                 sDisk sCurrentDisk = new sDisk();
@@ -268,7 +269,12 @@ namespace QRSC
                     sCurrentDisk.total_space = d.TotalSize;
                     sCurrentDisk.root_dir = d.RootDirectory.ToString();
                 }
+                dAllDrives += $"Disk name: {sCurrentDisk.name}\n Type: {sCurrentDisk.type}\n " +
+                    $"Label: {sCurrentDisk.label}\n File system: {sCurrentDisk.file_system}\n " +
+                    $"Available space: {sCurrentDisk.avl_space}\n Total space: {sCurrentDisk.total_space}\n " +
+                    $"Root directory: {sCurrentDisk.root_dir}\n";
             }
+            return dAllDrives;
         }
 
         //Тип функция получения данных о сети, но все входящие данные
@@ -313,6 +319,7 @@ namespace QRSC
         public long dRAMSize;
         public long dRAMFree;
         public long dCPUCurrentClockSpeed;
+        public string dDiskParams;
         /// <summary>
         /// Функция получения данных
         /// </summary>
@@ -335,7 +342,7 @@ namespace QRSC
             dRAMSize = fRAMSize();
             dRAMFree = fRAMFree();
             dCPUCurrentClockSpeed = fCPUCurrentClockSpeed();
-            fDiskParams();
+            dDiskParams = fDiskParams();
         }
 }
 
