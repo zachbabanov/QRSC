@@ -272,9 +272,9 @@ namespace QRSC
                 dAllDrives += $"Disk name: {sCurrentDisk.name}" +
                     $"Type: {sCurrentDisk.type}" +
                     $"Label: {sCurrentDisk.label}" +
-                    $" File system: {sCurrentDisk.file_system} " +
-                    $"Available space: {sCurrentDisk.avl_space} " +
-                    $"Total space: {sCurrentDisk.total_space} " +
+                    $" File system: {sCurrentDisk.file_system}" +
+                    $"Available space: {sCurrentDisk.avl_space}" +
+                    $"Total space: {sCurrentDisk.total_space}" +
                     $"Root directory: {sCurrentDisk.root_dir}";
             }
             return dAllDrives;
@@ -305,29 +305,84 @@ namespace QRSC
             }
         }*/
 
+        /// <summary>
+        /// Переменная для получения имени видеоадаптера
+        /// </summary>
         public string dGPUName;
+        /// <summary>
+        /// Переменная для получения статуса видеоадаптера
+        /// </summary>
         public string dGPUStatus;
+        /// <summary>
+        /// Переменная для получения версии драйвера видеоадаптера
+        /// </summary>
         public string dGPUDriverVersion;
+        /// <summary>
+        /// Переменная для получения имени процессора видеоадаптера
+        /// </summary>
         public string dGPUVideoProcessor;
+        /// <summary>
+        /// Переменная для получения имени процессора
+        /// </summary>
         public string dCPUName;
+        /// <summary>
+        /// Переменная для получения производителя(бренда) процессора
+        /// </summary>
         public string dCPUManufacturer;
+        /// <summary>
+        /// Переменная для получения информации об итерации Windows
+        /// </summary>
         public string dSystemName;
+        /// <summary>
+        /// Переменная для получения ключа Windows
+        /// </summary>
         public string dSystemSerialNumber;
+        /// <summary>
+        /// Переменная для получения пути к корневой папке системы
+        /// </summary>
         public string dSystemDirectory;
+        /// <summary>
+        /// Переменная для получения версии Windows
+        /// </summary>
         public string dSystemVersion;
+        /// <summary>
+        /// Переменная для получения количества ОЗУ видеоадаптерп
+        /// </summary>
         public double dGPURAM;
+        /// <summary>
+        /// Переменная для получения количества логических ядер процессора
+        /// </summary>
         public int dCPUNumberOfCores;
+        /// <summary>
+        /// Переменная для получения потоков процессора
+        /// </summary>
         public int dCPUNumberOfThreads;
+        /// <summary>
+        /// Переменная для получения разрядности процессора
+        /// </summary>
         public int dCPUWidth;
+        /// <summary>
+        /// Переменная для получения общего объема ОЗУ
+        /// </summary>
         public long dRAMSize;
+        /// <summary>
+        /// Переменная для получения объма свободного ОЗУ
+        /// </summary>
         public long dRAMFree;
+        /// <summary>
+        /// Переменная для получения текущей скорости процессора
+        /// </summary>
         public long dCPUCurrentClockSpeed;
+        /// <summary>
+        /// Строковая переменная для заполнения текстовой информации о дисках и томах
+        /// </summary>
         public string dDiskParams;
         /// <summary>
         /// Функция получения данных
         /// </summary>
         public void fProcessing()
         {
+            //Получение данных о ПК через присваивание переменных значений возвращаемых соответсвующими функциями
             dGPUName = fGPUName();
             dGPUStatus = fGPUStatus();
             dGPUDriverVersion = fGPUDriverVersion();
