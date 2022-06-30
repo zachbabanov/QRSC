@@ -27,11 +27,26 @@ namespace QRSC
             return string.Format("{0:n1} {1}", adjustedSize, SizeSuffixes[mag]);
         }
         /// <summary>
-		/// Функция получения имени видеоадаптера
+		/// Объект типа ManagementObjectSearcher для получения данных о видеоадаптере из Win32 API
 		/// </summary>
-        public string fGPUName()
+        private static ManagementObjectSearcher myVideoObject = new ManagementObjectSearcher("select * from Win32_VideoController");
+        /// <summary>
+		/// Объект типа ManagementObjectSearcher для получения данных о процессоре из Win32 API
+		/// </summary>
+        private static ManagementObjectSearcher myProcessorObject = new ManagementObjectSearcher("select * from Win32_Processor");
+        /// <summary>
+		/// Объект типа ManagementObjectSearcher для получения данных о ОС из Win32 API
+		/// </summary>
+        private static ManagementObjectSearcher myOperativeSystemObject = new ManagementObjectSearcher("select * from Win32_OperatingSystem");
+        // Набор объектов и функций нужный для получения данных об операвтиной пямяти от реестра ОС из Win32API
+        private static ObjectQuery wql = new ObjectQuery("SELECT * FROM Win32_OperatingSystem");
+        private static ManagementObjectSearcher searcher = new ManagementObjectSearcher(wql);
+        private static ManagementObjectCollection results = searcher.Get();
+        /// <summary>
+        /// Функция получения имени видеоадаптера
+        /// </summary>
+        private string fGPUName()
         {
-            ManagementObjectSearcher myVideoObject = new ManagementObjectSearcher("select * from Win32_VideoController");
             foreach (ManagementObject obj in myVideoObject.Get())
             {
                 return Convert.ToString(obj["Name"]);
@@ -41,9 +56,8 @@ namespace QRSC
         /// <summary>
 		/// Функция получения статуса видеоадаптера
 		/// </summary>
-        public string fGPUStatus()
+        private string fGPUStatus()
         {
-            ManagementObjectSearcher myVideoObject = new ManagementObjectSearcher("select * from Win32_VideoController");
             foreach (ManagementObject obj in myVideoObject.Get())
             {
                 return Convert.ToString(obj["Status"]);
@@ -53,9 +67,8 @@ namespace QRSC
         /// <summary>
 		/// Функция получения количества ОЗУ видеоадаптера
 		/// </summary>
-        public double fGPURAM()
+        private double fGPURAM()
         {
-            ManagementObjectSearcher myVideoObject = new ManagementObjectSearcher("select * from Win32_VideoController");
             foreach (ManagementObject obj in myVideoObject.Get())
             {
                 return Convert.ToDouble(obj["AdapterRAM"]);
@@ -65,9 +78,8 @@ namespace QRSC
         /// <summary>
 		/// Функция получения версии драйвера видеоадаптера
 		/// </summary>
-        public string fGPUDriverVersion()
+        private string fGPUDriverVersion()
         {
-            ManagementObjectSearcher myVideoObject = new ManagementObjectSearcher("select * from Win32_VideoController");
             foreach (ManagementObject obj in myVideoObject.Get())
             {
                 return Convert.ToString(obj["DriverVersion"]);
@@ -77,9 +89,8 @@ namespace QRSC
         /// <summary>
 		/// Функция получения имени видеопроцессора видеоадаптера
 		/// </summary>
-        public string fGPUVideoProcessor()
+        private string fGPUVideoProcessor()
         {
-            ManagementObjectSearcher myVideoObject = new ManagementObjectSearcher("select * from Win32_VideoController");
             foreach (ManagementObject obj in myVideoObject.Get())
             {
                 return Convert.ToString(obj["VideoProcessor"]);
@@ -89,10 +100,9 @@ namespace QRSC
         /// <summary>
 		/// Функция получения имени процессора
 		/// </summary>
-        public string fCPUName()
+        private string fCPUName()
         {
-            ManagementObjectSearcher myProcessorObject = new ManagementObjectSearcher("select * from Win32_Processor");
-            foreach (ManagementObject obj in myProcessorObject.Get())
+           foreach (ManagementObject obj in myProcessorObject.Get())
             {
                 return Convert.ToString(obj["Name"]);
             }
@@ -101,10 +111,9 @@ namespace QRSC
         /// <summary>
 		/// Функция получения имени производителя процессора
 		/// </summary>
-        public string fCPUManufacturer()
+        private string fCPUManufacturer()
         {
-            ManagementObjectSearcher myProcessorObject = new ManagementObjectSearcher("select * from Win32_Processor");
-            foreach (ManagementObject obj in myProcessorObject.Get())
+           foreach (ManagementObject obj in myProcessorObject.Get())
             {
                 return Convert.ToString(obj["Manufacturer"]);
             }
@@ -113,10 +122,9 @@ namespace QRSC
         /// <summary>
 		/// Функция получения текущей скорости процессора
 		/// </summary>
-        public long fCPUCurrentClockSpeed()
+        private long fCPUCurrentClockSpeed()
         {
-            ManagementObjectSearcher myProcessorObject = new ManagementObjectSearcher("select * from Win32_Processor");
-            foreach (ManagementObject obj in myProcessorObject.Get())
+           foreach (ManagementObject obj in myProcessorObject.Get())
             {
                 return Convert.ToInt64(obj["CurrentClockSpeed"]);
             }
@@ -125,10 +133,9 @@ namespace QRSC
         /// <summary>
 		/// Функция получения количества ядер процессора
 		/// </summary>
-        public int fCPUNumberOfCores()
+        private int fCPUNumberOfCores()
         {
-            ManagementObjectSearcher myProcessorObject = new ManagementObjectSearcher("select * from Win32_Processor");
-            foreach (ManagementObject obj in myProcessorObject.Get())
+           foreach (ManagementObject obj in myProcessorObject.Get())
             {
                 return Convert.ToInt16(obj["NumberOfCores"]);
             }
@@ -137,10 +144,9 @@ namespace QRSC
         /// <summary>
 		/// Функция получения количества потоков процессора
 		/// </summary>
-        public int fCPUNumberOfThreads()
+        private int fCPUNumberOfThreads()
         {
-            ManagementObjectSearcher myProcessorObject = new ManagementObjectSearcher("select * from Win32_Processor");
-            foreach (ManagementObject obj in myProcessorObject.Get())
+           foreach (ManagementObject obj in myProcessorObject.Get())
             {
                 return Convert.ToInt16(obj["NumberOfLogicalProcessors"]);
             }
@@ -149,9 +155,8 @@ namespace QRSC
         /// <summary>
 		/// Функция получения разрядности процессора
 		/// </summary>
-        public int fCPUWidth()
+        private int fCPUWidth()
         {
-            ManagementObjectSearcher myProcessorObject = new ManagementObjectSearcher("select * from Win32_Processor");
             foreach (ManagementObject obj in myProcessorObject.Get())
             {
                 return Convert.ToInt16(obj["AddressWidth"]);
@@ -161,9 +166,8 @@ namespace QRSC
         /// <summary>
         /// Функция получения названия системы
         /// </summary>
-        public string fSystemName()
+        private string fSystemName()
         {
-            ManagementObjectSearcher myOperativeSystemObject = new ManagementObjectSearcher("select * from Win32_OperatingSystem");
             foreach (ManagementObject obj in myOperativeSystemObject.Get())
             {
                 return Convert.ToString(obj["Caption"]);
@@ -173,9 +177,8 @@ namespace QRSC
         /// <summary>
         /// Функция получения ключа системы
         /// </summary>
-        public string fSystemSerialNumber()
+        private string fSystemSerialNumber()
         {
-            ManagementObjectSearcher myOperativeSystemObject = new ManagementObjectSearcher("select * from Win32_OperatingSystem");
             foreach (ManagementObject obj in myOperativeSystemObject.Get())
             {
                 return Convert.ToString(obj["SerialNumber"]);
@@ -185,9 +188,8 @@ namespace QRSC
         /// <summary>
         /// Функция получения директории системы
         /// </summary>
-        public string fSystemDirectory()
+        private string fSystemDirectory()
         {
-            ManagementObjectSearcher myOperativeSystemObject = new ManagementObjectSearcher("select * from Win32_OperatingSystem");
             foreach (ManagementObject obj in myOperativeSystemObject.Get())
             {
                 return Convert.ToString(obj["SystemDirectory"]);
@@ -197,9 +199,8 @@ namespace QRSC
         /// <summary>
         /// Функция получения версии системы
         /// </summary>
-        public string fSystemVersion()
+        private string fSystemVersion()
         {
-            ManagementObjectSearcher myOperativeSystemObject = new ManagementObjectSearcher("select * from Win32_OperatingSystem");
             foreach (ManagementObject obj in myOperativeSystemObject.Get())
             {
                 return Convert.ToString(obj["Version"]);
@@ -209,13 +210,9 @@ namespace QRSC
         /// <summary>
         /// Функция получения общего количества ОЗУ
         /// </summary>
-        public long fRAMSize()
+        private long fRAMSize()
         {
-            ObjectQuery wql = new ObjectQuery("SELECT * FROM Win32_OperatingSystem");
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher(wql);
-            ManagementObjectCollection results = searcher.Get();
-
-            foreach (ManagementObject result in results)
+           foreach (ManagementObject result in results)
             {
                 return Convert.ToInt64(result["TotalVisibleMemorySize"]);
             }
@@ -224,13 +221,9 @@ namespace QRSC
         /// <summary>
         /// Функция получения количества свободного ОЗУ
         /// </summary>
-        public long fRAMFree()
+        private long fRAMFree()
         {
-            ObjectQuery wql = new ObjectQuery("SELECT * FROM Win32_OperatingSystem");
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher(wql);
-            ManagementObjectCollection results = searcher.Get();
-
-            foreach (ManagementObject result in results)
+           foreach (ManagementObject result in results)
             {
                 return Convert.ToInt64(result["FreePhysicalMemory"]);
             }
@@ -239,7 +232,7 @@ namespace QRSC
         /// <summary>
         /// Структура типа данных о диске
         /// </summary>
-        public struct sDisk
+        private struct sDisk
         {
             public string name;
             public string type;
@@ -252,8 +245,9 @@ namespace QRSC
         /// <summary>
         /// Заполнение структуры даных о диске
         /// </summary>
-        public string fDiskParams()
+        private string fDiskParams()
         {
+            // Набор переменных нужный для получения всех томов и жестких дисков из Win32API
             DriveInfo[] allDrives = DriveInfo.GetDrives();
             string dAllDrives = "";
             foreach (DriveInfo d in allDrives)
@@ -401,6 +395,28 @@ namespace QRSC
             dRAMFree = fRAMFree();
             dCPUCurrentClockSpeed = fCPUCurrentClockSpeed();
             dDiskParams = fDiskParams();
+        }
+
+        public void fProcessingZero()
+        {
+            dGPUName = "";
+            dGPUStatus = "";
+            dGPUDriverVersion = "";
+            dGPUVideoProcessor = "";
+            dCPUName = "";
+            dCPUManufacturer = "";
+            dSystemName = "";
+            dSystemSerialNumber = "";
+            dSystemDirectory = "";
+            dSystemVersion = "";
+            dGPURAM = 0;
+            dCPUNumberOfCores = 0;
+            dCPUNumberOfThreads = 0;
+            dCPUWidth = 0;
+            dRAMSize = 0;
+            dRAMFree = 0;
+            dCPUCurrentClockSpeed = 0;
+            dDiskParams = "";
         }
 }
 

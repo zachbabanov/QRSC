@@ -20,15 +20,20 @@ namespace QRSC
 		private QrCodeEncodingOptions options;
 		public Form1()
 		{
-			cCurrentDataHolder.fProcessing();
+			///<summary>
+			///Запуск окна приложения
+			///</summary>
 			InitializeComponent();
+			//Задание параметров отрисовки изображения qr-кода
 			options = new QrCodeEncodingOptions
 			{
 				DisableECI = true,
 				CharacterSet = "UTF-8",
-				Width = 256,
-				Height = 256,
+				Width = 640,
+				Height = 640,
 			};
+			cCurrentDataHolder.fProcessing();
+			//Отрисовка qr
 			var writer = new BarcodeWriter();
 			writer.Format = BarcodeFormat.QR_CODE;
 			writer.Options = options;
@@ -42,6 +47,8 @@ namespace QRSC
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+			//Обновление qr-кода после получения новых данных каждые 5 секунд
+			cCurrentDataHolder.fProcessingZero();
 			cCurrentDataHolder.fProcessing();
 			var qr = new ZXing.BarcodeWriter();
 			qr.Options = options;
