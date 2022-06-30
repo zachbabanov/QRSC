@@ -47,7 +47,7 @@ namespace QRSC
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-			//Обновление qr-кода после получения новых данных каждые 5 секунд
+			//Обновление qr-кода после получения новых данных каждые 10 секунд
 			cCurrentDataHolder.fProcessingZero();
 			cCurrentDataHolder.fProcessing();
 			var qr = new ZXing.BarcodeWriter();
@@ -57,5 +57,21 @@ namespace QRSC
 			pictureBox1.Image = result;
 			pictureBox1.Refresh();
 		}
+
+        private void notifyIcon1_MouseClick(object sender, MouseEventArgs e)
+        {
+			this.Show();
+			this.WindowState = FormWindowState.Normal;
+			notifyIcon1.Visible = false;
+		}
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+			if (WindowState == FormWindowState.Minimized)
+            {
+				this.Hide(); 
+				notifyIcon1.Visible = true;
+			}
+        }
     }
 }
