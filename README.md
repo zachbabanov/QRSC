@@ -13,3 +13,4 @@ This app is part of AR project for getting PC logs from your mobile device
 |  3  | Genrating QR overriding memory       | New QR continiusly hold more and more memory cause of overriding setting in JSON                                            | Singlton class/structure of logs |<ul><li>- [ ] </li></ul> |
 # Using
 Build and compile on your device and use the .exe with existing .dll's
+Use mobile app(https://github.com/RudeGalaxy1010/AR_Diagnostic) to scan generated QR
