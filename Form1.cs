@@ -97,5 +97,10 @@ namespace QRSC
 				notifyIcon1.Visible = true;
 			}
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
